@@ -293,7 +293,9 @@ def checklist_view(equip_id, pm_type):
         today=datetime.utcnow().strftime("%Y-%m-%d")
     )
 
-
+@app.route("/")
+def home():
+    return redirect(url_for("menu"))  # or use render_template if needed
 
 # ── printable checklist page ──────────────────────────────────────────
 
