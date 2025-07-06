@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}{{ pm_type }} Checklist – {{ equip_id }}{% endblock %}
+
+
+{% block head_extra %}
+
+<p><strong>Date:</strong> {{ today }}</p>
+<style>
+  /* Hide buttons when printing */
+  @media print {.no-print{display:none!important;}}
+  /* Keep it single page: shrink fonts and remove extra margin for print  */
+  @media print {
+      body {font-size: 12px;}
+      h1,h2,h3 {margin:0 0 6px 0;}
+      ol{margin-top:6px;}
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-4xl">
+
+  <!-- buttons only visible on screen -->
+  <div class="no-print mb-6 flex items-center space-x-4">
+      <button onclick="window.print()"
+              class="bg-orange-700 hover:bg-orange-600 px-4 py-2 rounded font-bold">
+        🖨️ Print / Save as PDF
+      </button>
+      <a href="{{ url_for('checklist') }}"
+         class="text-blue-300 hover:underline">← Back</a>
+  </div>
+
+  <!-- Header block -->
+  <div class="border border-gray-600 rounded-lg p-4 mb-6 bg-gray-800">
+    <h2 class="text-2xl font-bold mb-2">{{ pm_type }} Checklist</h2>
+    <p><strong>Equipment:</strong> {{ equip_id }} — {{ equip_desc }}</p>
+    <p><strong>Date:</strong> {{ today }}</p>
+  </div>
+
+  <!-- 25-item checklist -->
+  <ol class="list-decimal pl-6 space-y-2">
+    {% for s in steps %}
+      <li>
+        <label class="inline-flex items-start">
+          <input type="checkbox" class="mr-2 mt-1 accent-orange-600 print:hidden">
+          <span>{{ s.task }}</span>
+        </label>
+      </li>
+    {% endfor %}
+  </ol>
+
+  <!-- signature line -->
+  <div class="mt-10">
+    <p>Tech Signature: ________________________________</p>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Print Checklist – VIN PM Scheduler{% endblock %}
+
+{% block content %}
+<div class="w-full max-w-md">
+  <h2 class="text-3xl font-bold mb-8">Print PM Checklist</h2>
+
+  <form method="post" class="space-y-6 bg-gray-800/70 p-8 rounded-xl shadow">
+
+    <div>
+        <label class="block mb-1 font-semibold">Equipment #</label>
+        <select name="equip_id" required
+            class="w-full rounded bg-gray-700 text-white px-4 py-2">
+          <option value="" disabled selected>Select unit…</option>
+          {% for eid in equips %}
+            <option value="{{ eid }}">{{ eid }}</option>
+          {% endfor %}
+    </select>
+
+
+      </div>
+
+    <div>
+      <label class="block mb-1 font-semibold">PM Type</label>
+      <select name="pm_type" required class="w-full rounded bg-gray-700 text-white px-4 py-2">
+        <option value="" disabled selected>Select PM…</option>
+        {% for pm in pm_types %}
+          <option value="{{ pm }}">{{ pm }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button class="w-full bg-orange-800 hover:bg-orange-700 py-3 rounded-lg font-bold">
+      Generate Checklist
+    </button>
+
+    <a href="{{ url_for('home') }}" class="block text-center mt-6 text-blue-300 hover:underline">
+      ← Back to menu
+    </a>
+  </form>
+</div>
+{% endblock %}

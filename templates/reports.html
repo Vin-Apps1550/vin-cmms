@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}PM Reports – VIN PM Scheduler{% endblock %}
+
+{% block content %}
+<div class="w-full flex flex-col items-center">
+
+  <h2 class="text-3xl font-bold mb-8">PM Reports</h2>
+
+  <!-- Overdue Section ------------------------------------------------->
+ 
+  
+<!-- ── Overdue table ── -->
+<h2 class="text-xl font-bold text-white mb-2">Overdue PMs ({{ overdue | length }})</h2>
+{% if overdue %}
+  {% with rows = overdue %}
+    {% include "report_table.html" %}
+  {% endwith %}
+{% else %}
+  <p class="mb-8 text-green-400">Great! No overdue PMs.</p>
+{% endif %}
+
+
+
+<!-- ── Upcoming table ── -->
+<h2 class="text-xl font-bold text-white mt-10 mb-2">Upcoming PMs (within {{ window }} hrs)</h2>
+{% if upcoming %}
+  {% with rows = upcoming %}
+    {% include "report_table.html" %}
+  {% endwith %}
+{% else %}
+  <p class="text-green-400">No PMs due in the next {{ window }} hours.</p>
+{% endif %}
+
+  <a href="{{ url_for('home') }}"
+     class="mt-10 text-blue-300 hover:underline">← Back to menu</a>
+</div>
+{% endblock %}

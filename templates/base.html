@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block title %}VIN PM Scheduler{% endblock %}</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% block head_extra %}{% endblock %}
+</head>
+
+<!-- Body flex-box keeps footer at bottom -->
+<body class="bg-[#0a244d] text-white font-sans flex flex-col min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-gray-500 py-5 text-center shadow">
+    <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide">
+      VIN PM SCHEDULER
+    </h1>
+  </header>
+
+  <!-- Page content -->
+  <main class="flex-grow flex items-center justify-center px-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-8 text-center text-sm text-gray-300">
+    VIN PM SCHEDULER  ALL RIGHTS RESERVED 2025
+  </footer>
+
+</body>
+</html>

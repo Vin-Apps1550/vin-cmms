@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Equipment Status – VIN PM Scheduler{% endblock %}
+
+{% block content %}
+<div class="w-full flex flex-col items-center">
+  <h2 class="text-3xl font-bold mb-8">Equipment Status</h2>
+
+  {% with msgs = get_flashed_messages(with_categories=True) %}
+    {% if msgs %}
+      {% for cat, msg in msgs %}
+        <div class="mb-4 px-4 py-2 rounded
+                    {% if cat=='success' %} bg-green-700 text-green-100
+                    {% else %} bg-red-700 text-red-100 {% endif %}">
+          {{ msg }}
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="overflow-x-auto rounded-lg shadow-lg w-full max-w-4xl">
+    <table class="min-w-full bg-gray-800">
+      <thead class="bg-gray-700 text-xs uppercase tracking-wider">
+        <tr>
+          <th class="px-4 py-3 text-left">Equip</th>
+          <th class="px-4 py-3 text-left">Description</th>
+          <th class="px-4 py-3 text-left">Hours</th>
+          <th class="px-4 py-3 text-left">Status</th>
+          <th class="px-4 py-3 text-left">Last&nbsp;PM</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for r in rows %}
+        <tr class="border-t border-gray-700 hover:bg-gray-700/40">
+          <td class="px-4 py-2">{{ r.id }}</td>
+          <td class="px-4 py-2">{{ r.description or "—" }}</td>
+          <td class="px-4 py-2">{{ r.hour_meter }}</td>
+
+          <!-- Inline dropdown form -->
+          <td class="px-4 py-2">
+            <form action="{{ url_for('update_status', equip_id=r.id) }}" method="post">
+              <select name="status"
+                      onchange="this.form.submit()"
+                      class="rounded text-sm px-2 py-1 text-white
+                      {% if r.status == 'Active' %} bg-green-600 hover:bg-green-500
+                      {% elif r.status == 'Down' %} bg-red-700 hover:bg-red-600
+                      {% else %} bg-yellow-600 hover:bg-yellow-500 {% endif %}">
+                {% for s in STATUS_CHOICES %}
+                  <option value="{{ s }}" {% if s == r.status %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+              </select>
+            </form>
+          </td>
+
+          <td class="px-4 py-2">{{ r.last_pm_date or "—" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <a href="{{ url_for('home') }}"
+     class="mt-8 text-blue-300 hover:underline">← Back to menu</a>
+</div>
+{% endblock %}

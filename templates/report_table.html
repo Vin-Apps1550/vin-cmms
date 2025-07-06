@@ -1,0 +1,24 @@
+<table class="table-auto text-sm w-full max-w-5xl mx-auto">
+    <thead class="bg-gray-700 text-white">
+      <tr>
+        <th class="px-4 py-2 text-left">Equip</th>
+        <th class="px-4 py-2 text-left">Description</th>
+        <th class="px-4 py-2 text-right">Current Hrs</th>
+        <th class="px-4 py-2 text-right">Interval</th>
+        <th class="px-4 py-2 text-right">Next Due</th>
+        <th class="px-4 py-2 text-right">Last PM</th>
+      </tr>
+    </thead>
+    <tbody class="bg-gray-800 text-white">
+      {% for row in rows %}
+        <tr class="border-t border-gray-600">
+          <td class="px-4 py-2">{{ row.equipment_id }}</td>
+          <td class="px-4 py-2">{{ row.description }}</td>
+          <td class="px-4 py-2 text-right">{{ row.hour_meter }}</td>
+          <td class="px-4 py-2 text-right">{{ row.interval_label }}</td>
+          <td class="px-4 py-2 text-right">{{ row.next_pm_due }}</td>
+          <td class="px-4 py-2 text-right">{{ row.last_pm_date }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>

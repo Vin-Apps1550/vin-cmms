@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}PM Schedule – VIN PM Scheduler{% endblock %}
+
+{% block content %}
+<div class="w-full flex flex-col items-center">
+
+  <h2 class="text-3xl font-bold mb-8 text-center">
+    PM Schedule
+    {% if overdue_only %}
+      <span class="ml-4 inline-block bg-red-700 text-xs px-3 py-1 rounded-full">
+        OVERDUE ONLY
+      </span>
+    {% endif %}
+  </h2>
+
+  <div class="overflow-x-auto rounded-lg shadow-lg w-full max-w-4xl">
+    <table class="min-w-full bg-gray-800">
+      <thead class="bg-gray-700 text-xs uppercase tracking-wider">
+        <tr>
+          <th class="px-4 py-3 text-left">Equip</th>
+          <th class="px-4 py-3 text-left">Interval</th>
+          <th class="px-4 py-3 text-left">Interval&nbsp;hrs</th>
+          <th class="px-4 py-3 text-left">Last&nbsp;PM&nbsp;hrs</th>
+          <th class="px-4 py-3 text-left">Current&nbsp;hrs</th>  <!-- NEW -->
+          <th class="px-4 py-3 text-left">Next&nbsp;Due</th>
+          <th class="px-4 py-3 text-left">Last&nbsp;PM&nbsp;Date</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for r in rows %}
+          <tr class="border-t border-gray-700
+                     {% if r.overdue %}bg-red-700/40{% else %}hover:bg-gray-700/40{% endif %}">
+            <td class="px-4 py-2">{{ r.equipment_id }}</td>
+            <td class="px-4 py-2">{{ r.interval_label }}</td>
+            <td class="px-4 py-2">{{ r.interval_hrs }}</td>
+            <td class="px-4 py-2">{{ r.last_pm_hrs }}</td>
+            <td class="px-4 py-2 font-semibold">{{ r.hour_meter }}</td>  <!-- NEW -->
+            <td class="px-4 py-2">{{ r.next_pm_due }}</td>
+            <td class="px-4 py-2">{{ r.last_pm_date }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-8 space-x-4">
+    <a href="{{ url_for('schedule') }}"
+       class="px-4 py-2 rounded bg-gray-600 hover:bg-gray-500 text-sm">All</a>
+    <a href="{{ url_for('schedule', overdue=1) }}"
+       class="px-4 py-2 rounded bg-red-700 hover:bg-red-600 text-sm">Overdue</a>
+    <a href="{{ url_for('home') }}"
+       class="ml-4 text-blue-300 hover:underline">← Back to menu</a>
+  </div>
+</div>
+{% endblock %}

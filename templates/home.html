@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Menu – VIN PM Scheduler{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-20 gap-y-20">
+
+  {% macro menu_btn(label, endpoint) -%}
+  <a href="{{ url_for(endpoint) }}"
+     class="block bg-orange-800 hover:bg-orange-700 transition
+            text-gray-100 font-semibold uppercase
+            w-64 sm:w-72 lg:w-80
+            py-10 px-6
+            text-center text-lg md:text-xl
+            rounded-xl shadow-xl
+            transform hover:-translate-y-1 hover:shadow-2xl">
+      {{ label }}
+  </a>
+  {%- endmacro %}
+
+  {{ menu_btn('View PM Schedule',  'schedule')      }}
+  {{ menu_btn('View PM Reports',   'reports')       }}
+  {{ menu_btn('View Equipment Status', 'status')    }}
+  {{ menu_btn('Log Running Hours', 'running_hours') }}
+  {{ menu_btn('Log Completed PM',  'completed_pm')  }}
+  {{ menu_btn('Print Checklist',   'checklist')     }}
+</div>
+{% endblock %}
